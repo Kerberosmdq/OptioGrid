@@ -1,0 +1,16 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Row 1 -->
+    <rect x="0" y="0" width="28" height="28" rx="4" fill="#1A1F2C"/>
+    <rect x="36" y="0" width="28" height="28" rx="4" fill="#1A1F2C"/>
+    <rect x="72" y="0" width="28" height="28" rx="4" fill="#0066FF"/>
+    
+    <!-- Row 2 -->
+    <rect x="0" y="36" width="28" height="28" rx="4" fill="#1A1F2C"/>
+    <rect x="36" y="36" width="28" height="28" rx="4" fill="#1A1F2C"/>
+    <rect x="72" y="36" width="28" height="28" rx="4" fill="#1A1F2C"/>
+    
+    <!-- Row 3 -->
+    <rect x="0" y="72" width="28" height="28" rx="4" fill="#1A1F2C"/>
+    <rect x="36" y="72" width="28" height="28" rx="4" fill="#1A1F2C"/>
+    <rect x="72" y="72" width="28" height="28" rx="4" fill="#1A1F2C"/>
+</svg>
