@@ -6,7 +6,7 @@
             "destination": "/backend/src/index.ts"
         },
         {
-            "source": "/(.*)",
+            "source": "/((?!api/|assets/|favicon.ico|logo.svg|.*\\..*).*)",
             "destination": "/frontend/index.html"
         }
     ],
