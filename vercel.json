@@ -1,15 +1,5 @@
 {
     "version": 2,
-    "rewrites": [
-        {
-            "source": "/api/(.*)",
-            "destination": "/backend/src/index.ts"
-        },
-        {
-            "source": "/((?!api/|.*\\..*).*)",
-            "destination": "/index.html"
-        }
-    ],
     "builds": [
         {
             "src": "backend/src/index.ts",
@@ -21,6 +11,19 @@
             "config": {
                 "distDir": "dist"
             }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/api/(.*)",
+            "dest": "/backend/src/index.ts"
+        },
+        {
+            "handle": "filesystem"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "/index.html"
         }
     ]
 }
