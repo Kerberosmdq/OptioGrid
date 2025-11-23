@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { X, UserPlus, Mail, Trash2, Shield, ShieldAlert } from 'lucide-react';
 import { supabase } from '../lib/supabase';
-import { toast } from 'sonner';
+
 
 interface ShareModalProps {
     isOpen: boolean;
@@ -31,7 +31,7 @@ export function ShareModal({ isOpen, onClose, templateId, templateName }: ShareM
     }, [isOpen, templateId]);
 
     const fetchCollaborators = async () => {
-        const { data, error } = await supabase
+        const { data } = await supabase
             .from('collaborators')
             .select('*')
             .eq('template_id', templateId);
