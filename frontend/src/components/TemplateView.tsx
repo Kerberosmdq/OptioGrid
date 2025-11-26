@@ -124,7 +124,7 @@ export function TemplateView() {
         setExtractedData(null);
 
         try {
-            const response = await fetch('http://localhost:3000/api/extract', {
+            const response = await fetch('/api/extract', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url }),

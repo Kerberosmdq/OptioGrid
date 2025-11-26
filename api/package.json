@@ -1,12 +1,11 @@
 {
-    "name": "optiogrid-backend",
+    "name": "optiogrid-api",
     "version": "1.0.0",
-    "description": "Backend for OptioGrid",
-    "main": "dist/index.js",
+    "description": "API for OptioGrid",
+    "main": "index.ts",
     "scripts": {
-        "build": "tsc",
-        "start": "node dist/index.js",
-        "dev": "nodemon src/index.ts"
+        "start": "ts-node index.ts",
+        "dev": "nodemon index.ts"
     },
     "keywords": [],
     "author": "",
