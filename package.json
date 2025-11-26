@@ -1,14 +1,14 @@
 {
-    "private": true,
-    "workspaces": [
-        "frontend",
-        "api"
-    ],
-    "scripts": {
-        "build": "node build-script.js",
-        "install": "npm install"
-    },
-    "engines": {
-        "node": "18.x"
+    {
+        "private": true,
+        "workspaces": [
+            "frontend",
+            "api"
+        ],
+        "scripts": {
+            "build": "node build-script.js"
+        },
+        "engines": {
+            "node": "18.x"
+        }
     }
-}
