@@ -23,16 +23,16 @@ try {
     execSync('npm run build --workspace=frontend', { stdio: 'inherit' });
 
     const distPath = path.join(__dirname, 'frontend', 'dist');
-    const publicPath = path.join(__dirname, 'public');
+    const publicPath = path.join(__dirname, 'dist');
 
-    console.log('Moving build artifacts to public...');
+    console.log('Moving build artifacts to dist...');
     if (fs.existsSync(publicPath)) {
         fs.rmSync(publicPath, { recursive: true, force: true });
     }
 
     copyDir(distPath, publicPath);
 
-    console.log('Build complete. Artifacts in public/');
+    console.log('Build complete. Artifacts in dist/');
 } catch (error) {
     console.error('Build failed:', error);
     process.exit(1);
