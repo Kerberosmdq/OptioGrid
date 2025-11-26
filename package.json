@@ -5,7 +5,7 @@
         "api"
     ],
     "scripts": {
-        "build": "npm run build --workspace=frontend",
+        "build": "node build-script.js",
         "install": "npm install"
     },
     "engines": {
