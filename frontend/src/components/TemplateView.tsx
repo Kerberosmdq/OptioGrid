@@ -433,6 +433,16 @@ export function TemplateView() {
                                                         className="w-full font-bold text-lg bg-transparent border-b border-slate-200 focus:border-brand-blue focus:outline-none py-1 dark:text-white dark:border-slate-600"
                                                     />
                                                 </div>
+                                                <div>
+                                                    <label className="block text-xs font-bold text-slate-500 uppercase mb-1 dark:text-slate-400">URL del Producto</label>
+                                                    <input
+                                                        type="url"
+                                                        value={url}
+                                                        onChange={(e) => setUrl(e.target.value)}
+                                                        className="w-full bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/50 dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+                                                        placeholder="https://..."
+                                                    />
+                                                </div>
                                                 <div className="flex gap-4">
                                                     <div className="flex-1">
                                                         <label className="block text-xs font-bold text-slate-500 uppercase mb-1 dark:text-slate-400">Precio</label>

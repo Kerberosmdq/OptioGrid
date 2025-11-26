@@ -17,6 +17,7 @@ export function Dashboard() {
     const [searchQuery, setSearchQuery] = useState('');
     const [showCreateModal, setShowCreateModal] = useState(false);
     const [newTemplateName, setNewTemplateName] = useState('');
+    const [newTemplateFields, setNewTemplateFields] = useState<string[]>([]);
     const [creating, setCreating] = useState(false);
     const [userEmail, setUserEmail] = useState<string | null>(null);
 
@@ -77,12 +78,17 @@ export function Dashboard() {
         const { data: { user } } = await supabase.auth.getUser();
 
         if (user) {
+            // Filter empty fields and map to correct structure
+            const fieldsToSave = newTemplateFields
+                .filter(f => f.trim() !== '')
+                .map(f => ({ name: f.trim(), type: 'text' }));
+
             const { data, error } = await supabase
                 .from('templates')
                 .insert([{
                     name: newTemplateName,
                     owner_id: user.id,
-                    fields: []
+                    fields: fieldsToSave
                 }])
                 .select()
                 .single();
@@ -94,6 +100,7 @@ export function Dashboard() {
                 setTemplates([data, ...templates]);
                 setShowCreateModal(false);
                 setNewTemplateName('');
+                setNewTemplateFields([]);
                 toast.success('Plantilla creada exitosamente');
                 navigate(`/template/${data.id}`);
             }
@@ -312,6 +319,50 @@ export function Dashboard() {
                                         autoFocus
                                     />
                                 </div>
+
+                                <div className="mb-6">
+                                    <label className="block text-sm font-bold text-slate-700 mb-2 dark:text-slate-300">
+                                        Campos Personalizados (Opcional)
+                                    </label>
+                                    <p className="text-xs text-slate-500 mb-3 dark:text-slate-400">
+                                        Agrega campos extra que quieras comparar (ej: KM, Año, RAM).
+                                    </p>
+
+                                    <div className="space-y-3 mb-3">
+                                        {newTemplateFields.map((field, index) => (
+                                            <div key={index} className="flex gap-2">
+                                                <input
+                                                    type="text"
+                                                    value={field}
+                                                    onChange={(e) => {
+                                                        const newFields = [...newTemplateFields];
+                                                        newFields[index] = e.target.value;
+                                                        setNewTemplateFields(newFields);
+                                                    }}
+                                                    placeholder="Nombre del campo"
+                                                    className="flex-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-brand-blue/50 dark:bg-slate-700 dark:border-slate-600 dark:text-white"
+                                                />
+                                                <button
+                                                    type="button"
+                                                    onClick={() => setNewTemplateFields(newTemplateFields.filter((_, i) => i !== index))}
+                                                    className="p-2 text-red-500 hover:bg-red-50 rounded-lg transition-colors dark:hover:bg-red-900/30"
+                                                >
+                                                    <Trash2 className="w-4 h-4" />
+                                                </button>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <button
+                                        type="button"
+                                        onClick={() => setNewTemplateFields([...newTemplateFields, ''])}
+                                        className="text-sm text-brand-blue font-bold hover:text-blue-700 flex items-center gap-1 transition-colors"
+                                    >
+                                        <Plus className="w-4 h-4" />
+                                        Agregar Campo
+                                    </button>
+                                </div>
+
                                 <div className="flex gap-3">
                                     <button
                                         type="button"
