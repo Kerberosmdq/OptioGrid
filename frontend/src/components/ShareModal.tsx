@@ -96,12 +96,12 @@ export function ShareModal({ isOpen, onClose, templateId, templateName }: ShareM
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-white rounded-3xl shadow-2xl w-full max-w-md relative z-10 overflow-hidden"
+                className="bg-white rounded-3xl shadow-2xl w-full max-w-md relative z-10 overflow-hidden dark:bg-slate-800"
             >
                 {/* Header */}
-                <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50 dark:bg-slate-800 dark:border-slate-700">
                     <div>
-                        <h3 className="text-xl font-bold text-brand-dark">Compartir Plantilla</h3>
+                        <h3 className="text-xl font-bold text-brand-dark dark:text-white">Compartir Plantilla</h3>
                         <p className="text-sm text-slate-500 truncate max-w-[200px]">{templateName}</p>
                     </div>
                     <button onClick={onClose} className="p-2 hover:bg-slate-100 rounded-full transition-colors">
@@ -121,14 +121,14 @@ export function ShareModal({ isOpen, onClose, templateId, templateName }: ShareM
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     placeholder="usuario@ejemplo.com"
-                                    className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/50 text-sm"
+                                    className="w-full pl-9 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-blue/50 text-sm dark:bg-slate-700 dark:border-slate-600 dark:text-white dark:placeholder-slate-400"
                                     required
                                 />
                             </div>
                             <select
                                 value={role}
                                 onChange={(e) => setRole(e.target.value as 'editor' | 'viewer')}
-                                className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/50"
+                                className="bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/50 dark:bg-slate-700 dark:border-slate-600 dark:text-white"
                             >
                                 <option value="viewer">Lector</option>
                                 <option value="editor">Editor</option>

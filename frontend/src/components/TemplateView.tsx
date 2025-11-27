@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 import type { Template, Item } from '../types';
-import { Plus, Save, ArrowLeft, ExternalLink, Loader2, Download, X, Share2, Upload } from 'lucide-react';
+import { Plus, Save, ArrowLeft, ExternalLink, Loader2, Download, X, Share2, Upload, ArrowUpDown } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ItemCard } from './ItemCard';
 import { ComparisonModal } from './ComparisonModal';
@@ -24,6 +24,7 @@ export function TemplateView() {
     const [customFieldValues, setCustomFieldValues] = useState<Record<string, any>>({});
     const [userId, setUserId] = useState<string>('');
     const [uploading, setUploading] = useState(false);
+    const [sortBy, setSortBy] = useState<'price-asc' | 'price-desc' | 'name-asc' | 'created_at-desc'>('created_at-desc');
 
     // Social State
     const [votes, setVotes] = useState<Record<string, { count: number, hasVoted: boolean }>>({});
@@ -288,6 +289,19 @@ export function TemplateView() {
         document.body.removeChild(link);
     };
 
+    const sortedItems = [...items].sort((a, b) => {
+        switch (sortBy) {
+            case 'price-asc':
+                return (a.price || 0) - (b.price || 0);
+            case 'price-desc':
+                return (b.price || 0) - (a.price || 0);
+            case 'name-asc':
+                return (a.title || '').localeCompare(b.title || '');
+            default: // created_at-desc
+                return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+        }
+    });
+
     if (loading) return <div className="flex justify-center items-center min-h-screen"><Loader2 className="w-8 h-8 animate-spin text-brand-blue" /></div>;
     if (!template) return <div className="text-center py-20">Plantilla no encontrada</div>;
 
@@ -307,6 +321,17 @@ export function TemplateView() {
                     </div>
                     <div className="flex items-center gap-3">
                         <ThemeToggle />
+                        <div className="relative group">
+                            <button className="p-2 text-slate-500 hover:text-brand-blue hover:bg-blue-50 rounded-full transition-colors dark:text-slate-400 dark:hover:bg-slate-800" title="Ordenar">
+                                <ArrowUpDown className="w-5 h-5" />
+                            </button>
+                            <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-slate-100 overflow-hidden hidden group-hover:block z-50 dark:bg-slate-800 dark:border-slate-700">
+                                <button onClick={() => setSortBy('created_at-desc')} className={`w-full text-left px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 ${sortBy === 'created_at-desc' ? 'text-brand-blue font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Más recientes</button>
+                                <button onClick={() => setSortBy('price-asc')} className={`w-full text-left px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 ${sortBy === 'price-asc' ? 'text-brand-blue font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Precio: Menor a Mayor</button>
+                                <button onClick={() => setSortBy('price-desc')} className={`w-full text-left px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 ${sortBy === 'price-desc' ? 'text-brand-blue font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Precio: Mayor a Menor</button>
+                                <button onClick={() => setSortBy('name-asc')} className={`w-full text-left px-4 py-2 text-sm hover:bg-slate-50 dark:hover:bg-slate-700 ${sortBy === 'name-asc' ? 'text-brand-blue font-bold' : 'text-slate-600 dark:text-slate-300'}`}>Nombre (A-Z)</button>
+                            </div>
+                        </div>
                         <button
                             onClick={() => setShowShareModal(true)}
                             className="p-2 text-slate-500 hover:text-brand-blue hover:bg-blue-50 rounded-full transition-colors dark:text-slate-400 dark:hover:bg-slate-800"
@@ -357,7 +382,7 @@ export function TemplateView() {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                        {items.map((item) => (
+                        {sortedItems.map((item) => (
                             <ItemCard
                                 key={item.id}
                                 item={item}

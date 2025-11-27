@@ -46,17 +46,18 @@ export function Dashboard() {
         // Fetch all templates visible to user (owned + shared)
         const { data: allData, error: allError } = await supabase
             .from('templates')
-            .select('*')
+            .select('*, items(count)')
             .order('created_at', { ascending: false });
 
         if (allError) {
             console.error('Error fetching templates:', allError);
             toast.error('Error al cargar las plantillas');
         } else if (allData) {
-            const owned = allData.filter(t => t.owner_id === user.id);
-            // For shared, we want templates where owner_id is NOT user.id
-            // The RLS policy ensures we only see shared ones if we are collaborators
-            const shared = allData.filter(t => t.owner_id !== user.id);
+            // Cast to any to handle the joined data which isn't in the base type
+            const templatesWithCounts = allData as any[];
+
+            const owned = templatesWithCounts.filter(t => t.owner_id === user.id);
+            const shared = templatesWithCounts.filter(t => t.owner_id !== user.id);
 
             setTemplates(owned);
             setSharedTemplates(shared);
@@ -231,9 +232,11 @@ export function Dashboard() {
                                         <h3 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-brand-blue transition-colors dark:text-white dark:group-hover:text-blue-400">
                                             {template.name}
                                         </h3>
-                                        <p className="text-sm text-slate-500 dark:text-slate-400">
-                                            Creada el {new Date(template.created_at).toLocaleDateString()}
-                                        </p>
+                                        <div className="flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+                                            <span>Creada el {new Date(template.created_at).toLocaleDateString()}</span>
+                                            <span>•</span>
+                                            <span>{(template as any).items?.[0]?.count || 0} artículos</span>
+                                        </div>
                                     </Link>
                                 ))}
                             </div>

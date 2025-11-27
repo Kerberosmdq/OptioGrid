@@ -116,7 +116,7 @@ export function ItemCard({
                 {/* Metadata Preview (First 2 fields) */}
                 {item.metadata && Object.keys(item.metadata).length > 0 && (
                     <div className="space-y-1 mb-4">
-                        {Object.entries(item.metadata).slice(0, 2).map(([key, value]) => (
+                        {Object.entries(item.metadata).map(([key, value]) => (
                             <div key={key} className="flex justify-between text-xs">
                                 <span className="text-slate-500 font-medium capitalize dark:text-slate-400">{key}:</span>
                                 <span className="text-slate-700 font-bold truncate max-w-[60%] dark:text-slate-300">{String(value)}</span>

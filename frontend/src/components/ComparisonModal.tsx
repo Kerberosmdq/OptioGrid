@@ -24,7 +24,7 @@ export function ComparisonModal({ items, onClose, isOpen }: ComparisonModalProps
     const handleGetRecommendation = async () => {
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:3000/api/recommend', {
+            const response = await fetch('/api/recommend', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ items, criteria: 'best value' }),
